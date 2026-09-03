@@ -1,0 +1,205 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), system-ui, -apple-system, "Segoe UI",
+    Helvetica, Arial, sans-serif;
+}
+
+/* ---------- Landing ---------- */
+
+.font-accent {
+  font-family: var(--font-accent-serif), Georgia, "Times New Roman", serif;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 40s linear infinite;
+}
+
+@media (max-width: 768px) {
+  .animate-marquee {
+    animation-duration: 18s;
+  }
+}
+
+/* Rastro de tarjetas que sigue al cursor en la sección final. */
+@keyframes trailFade {
+  0% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+}
+
+.animate-trail-fade {
+  animation: trailFade 1s ease-out forwards;
+}
+
+/* Sombras en capas: son las que dan la sensación de relieve a los botones. */
+.shadow-btn-primary {
+  box-shadow:
+    0 1px 2px 0 rgba(5, 26, 36, 0.1),
+    0 4px 4px 0 rgba(5, 26, 36, 0.09),
+    0 9px 6px 0 rgba(5, 26, 36, 0.05),
+    0 17px 7px 0 rgba(5, 26, 36, 0.01),
+    inset 0 2px 8px 0 rgba(255, 255, 255, 0.5);
+}
+
+.shadow-btn-secondary {
+  box-shadow:
+    0 0 0 0.5px rgba(0, 0, 0, 0.05),
+    0 4px 30px rgba(0, 0, 0, 0.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in-up {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .animate-marquee {
+    animation: none !important;
+  }
+  .animate-trail-fade {
+    animation: none !important;
+    opacity: 0 !important;
+  }
+}
+
+/* ---------- Pantallas de acceso (login / registro) ---------- */
+
+@keyframes authFadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes authDrift {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(20px, -16px) scale(1.06);
+  }
+}
+
+.entry {
+  animation: authFadeSlideUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.entry-badge {
+  animation-delay: 0.05s;
+}
+.entry-hl1 {
+  animation-delay: 0.15s;
+}
+.entry-hl2 {
+  animation-delay: 0.22s;
+}
+.entry-card {
+  animation-delay: 0.05s;
+}
+.entry-h1 {
+  animation-delay: 0.25s;
+}
+.entry-sub {
+  animation-delay: 0.32s;
+}
+.entry-f1 {
+  animation-delay: 0.4s;
+}
+.entry-f2 {
+  animation-delay: 0.46s;
+}
+.entry-f3 {
+  animation-delay: 0.52s;
+}
+.entry-btn {
+  animation-delay: 0.58s;
+}
+.entry-divider {
+  animation-delay: 0.64s;
+}
+.entry-google {
+  animation-delay: 0.7s;
+}
+.entry-bottom {
+  animation-delay: 0.76s;
+}
+
+.blob {
+  animation: authDrift 10s ease-in-out infinite;
+}
+.blob-b {
+  animation-duration: 13s;
+  animation-delay: -3s;
+}
+.blob-c {
+  animation-duration: 16s;
+  animation-delay: -6s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .entry {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .blob {
+    animation: none !important;
+  }
+}
