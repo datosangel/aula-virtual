@@ -25,6 +25,10 @@ export const metadata: Metadata = {
   description: "Plataforma de formación en línea: cursos, clases y evaluaciones",
 };
 
+// Evita que el loading.tsx raíz dispare pre-render estático de páginas que
+// dependen de sesión/Prisma en build time (no hay conexión a la base en ese paso).
+export const dynamic = "force-dynamic";
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
