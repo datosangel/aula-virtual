@@ -20,7 +20,7 @@ export async function AvailableCourses() {
 
   return (
     <section id="cursos-disponibles" className="mx-auto max-w-[1000px] px-4 py-12 md:px-8">
-      <h2 className="font-accent text-2xl font-semibold text-[#0D212C] md:text-3xl">
+      <h2 className="font-accent text-2xl font-semibold text-[#013C9A] md:text-3xl">
         Cursos disponibles
       </h2>
 
@@ -45,22 +45,22 @@ export async function AvailableCourses() {
             <div className="p-5 md:p-6">
               <Link
                 href="/login"
-                className="text-lg font-semibold text-[#0D212C] underline-offset-2 hover:underline md:text-xl"
+                className="text-lg font-semibold text-[#013C9A] underline-offset-2 hover:underline md:text-xl"
               >
                 {course.title}
               </Link>
 
               <div className="mt-3 flex flex-wrap gap-2">
-                <span className="rounded-full bg-amber-50 px-3 py-1 text-xs font-medium text-amber-700">
+                <span className="rounded-full bg-[#013C9A]/10 px-3 py-1 text-xs font-medium text-[#013C9A]">
                   {LEVEL_LABEL[course.level] ?? course.level}
                 </span>
                 {course.durationHrs && (
-                  <span className="rounded-full bg-sky-50 px-3 py-1 text-xs font-medium text-sky-700">
+                  <span className="rounded-full bg-[#3BB546]/10 px-3 py-1 text-xs font-medium text-[#2E8C37]">
                     {course.durationHrs} h de duración
                   </span>
                 )}
                 {course.category && (
-                  <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700">
+                  <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">
                     {course.category.name}
                   </span>
                 )}
@@ -77,13 +77,13 @@ export async function AvailableCourses() {
               <div className="mt-5 flex flex-col gap-3 sm:flex-row">
                 <Link
                   href="/login"
-                  className="rounded-lg bg-[#0D212C] px-5 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-[#0D212C]/90"
+                  className="rounded-lg bg-[#013C9A] px-5 py-2.5 text-center text-sm font-semibold text-white transition hover:brightness-110"
                 >
                   Ver curso
                 </Link>
                 <Link
                   href="/registro"
-                  className="rounded-lg border border-[#0D212C] px-5 py-2.5 text-center text-sm font-semibold text-[#0D212C] transition hover:bg-slate-50"
+                  className="rounded-lg border border-[#3BB546] px-5 py-2.5 text-center text-sm font-semibold text-[#2E8C37] transition hover:bg-[#3BB546]/10"
                 >
                   Crear cuenta
                 </Link>

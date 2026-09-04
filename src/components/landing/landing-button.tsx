@@ -3,10 +3,10 @@ import Link from "next/link";
 type Variant = "primary" | "secondary" | "tertiary";
 
 const VARIANTS: Record<Variant, string> = {
-  primary: "bg-[#051A24] text-white shadow-btn-primary hover:brightness-125",
-  secondary: "bg-white text-[#051A24] shadow-btn-secondary hover:bg-slate-50",
+  primary: "bg-[#013C9A] text-white shadow-btn-primary hover:brightness-110",
+  secondary: "bg-white text-[#013C9A] shadow-btn-secondary hover:bg-slate-50",
   tertiary:
-    "bg-white text-[#051A24] shadow-btn-primary hover:bg-slate-50 border border-black/5",
+    "bg-white text-[#013C9A] shadow-btn-primary hover:bg-slate-50 border border-black/5",
 };
 
 export function LandingButton({

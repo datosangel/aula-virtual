@@ -32,7 +32,7 @@ export default async function HomePage() {
       {/* ---------- Hero ---------- */}
       <section className="mx-auto max-w-[440px] px-6 pt-12 text-center md:pt-16">
         <Reveal delay={0.1}>
-          <p className="font-accent mb-4 text-[32px] font-semibold tracking-tight text-[#051A24] md:text-[40px] lg:text-[44px]">
+          <p className="font-accent mb-4 text-[32px] font-semibold tracking-tight text-[#013C9A] md:text-[40px] lg:text-[44px]">
             Aula Virtual
           </p>
         </Reveal>
