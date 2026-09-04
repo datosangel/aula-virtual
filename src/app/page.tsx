@@ -1,10 +1,12 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
+import { AvailableCourses } from "@/components/landing/available-courses";
 import { BottomNav } from "@/components/landing/bottom-nav";
 import { CourseMarquee } from "@/components/landing/course-marquee";
 import { FeaturedCourses } from "@/components/landing/featured-courses";
 import { LandingButton } from "@/components/landing/landing-button";
 import { LandingFooter } from "@/components/landing/landing-footer";
+import { LandingHeader } from "@/components/landing/landing-header";
 import { PartnerSection } from "@/components/landing/partner-section";
 import { PlansSection } from "@/components/landing/plans-section";
 import { QuoteSection } from "@/components/landing/quote-section";
@@ -25,6 +27,8 @@ export default async function HomePage() {
 
   return (
     <div className="w-full bg-white">
+      <LandingHeader />
+
       {/* ---------- Hero ---------- */}
       <section className="mx-auto max-w-[440px] px-6 pt-12 text-center md:pt-16">
         <Reveal delay={0.1}>
@@ -71,6 +75,7 @@ export default async function HomePage() {
         </Reveal>
       </section>
 
+      <AvailableCourses />
       <CourseMarquee />
       <QuoteSection />
       <PlansSection />
