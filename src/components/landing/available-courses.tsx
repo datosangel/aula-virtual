@@ -8,6 +8,33 @@ const LEVEL_LABEL: Record<string, string> = {
   AVANZADO: "Nivel avanzado",
 };
 
+const FEATURE_BOXES = [
+  {
+    icon: "✅",
+    title: "Plan de estudio",
+    description: "Módulos organizados con videos, materiales y actividades a tu ritmo.",
+    bg: "bg-sky-50",
+  },
+  {
+    icon: "📊",
+    title: "Seguimiento",
+    description: "Tu avance se registra automáticamente en cada módulo y actividad.",
+    bg: "bg-emerald-50",
+  },
+  {
+    icon: "⏱️",
+    title: "Acceso inmediato",
+    description: "Sin costo para alumnos matriculados. Ingresa cuando quieras.",
+    bg: "bg-amber-50",
+  },
+  {
+    icon: "🎓",
+    title: "Certificado",
+    description: "Se emite automáticamente al completar el curso.",
+    bg: "bg-rose-50",
+  },
+] as const;
+
 export async function AvailableCourses() {
   const courses = await prisma.course.findMany({
     where: { status: "PUBLICADO" },
@@ -20,11 +47,10 @@ export async function AvailableCourses() {
 
   return (
     <section id="cursos-disponibles" className="mx-auto max-w-[1000px] px-4 py-12 md:px-8">
-      <h2 className="font-accent text-2xl font-semibold text-[#013C9A] md:text-3xl">
-        Cursos disponibles
-      </h2>
+      <h2 className="text-2xl font-semibold text-[#0D212C] md:text-3xl">Academia</h2>
+      <p className="mt-1 text-lg text-slate-600 md:text-xl">Cursos disponibles</p>
 
-      <div className="mt-6 flex flex-col gap-6">
+      <div className="mt-6 flex flex-col gap-8">
         {courses.map((course) => (
           <article
             key={course.id}
@@ -45,34 +71,36 @@ export async function AvailableCourses() {
             <div className="p-5 md:p-6">
               <Link
                 href="/login"
-                className="text-lg font-semibold text-[#013C9A] underline-offset-2 hover:underline md:text-xl"
+                className="inline-flex items-center gap-1.5 text-lg font-semibold text-[#013C9A] underline-offset-2 hover:underline md:text-xl"
               >
                 {course.title}
+                <span aria-hidden>🔓</span>
               </Link>
 
               <div className="mt-3 flex flex-wrap gap-2">
-                <span className="rounded-full bg-[#013C9A]/10 px-3 py-1 text-xs font-medium text-[#013C9A]">
+                <span className="rounded-full bg-amber-50 px-3 py-1 text-xs font-medium text-amber-700">
                   {LEVEL_LABEL[course.level] ?? course.level}
                 </span>
                 {course.durationHrs && (
-                  <span className="rounded-full bg-[#3BB546]/10 px-3 py-1 text-xs font-medium text-[#2E8C37]">
-                    {course.durationHrs} h de duración
+                  <span className="rounded-full bg-sky-50 px-3 py-1 text-xs font-medium text-sky-700">
+                    ⏱ {course.durationHrs} h de duración
                   </span>
                 )}
                 {course.category && (
-                  <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">
+                  <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700">
                     {course.category.name}
                   </span>
                 )}
+                <span className="rounded-full bg-rose-50 px-3 py-1 text-xs font-medium text-rose-700">
+                  Certificado incluido
+                </span>
               </div>
 
-              <p className="mt-3 text-sm leading-relaxed text-slate-600 md:text-base">
+              <p className="mt-4 text-sm leading-relaxed text-slate-600 md:text-base">
                 {course.description}
               </p>
 
-              <p className="mt-2 text-xs text-slate-500">
-                Docente: {course.teacher.name}
-              </p>
+              <p className="mt-2 text-xs text-slate-500">Docente: {course.teacher.name}</p>
 
               <div className="mt-5 flex flex-col gap-3 sm:flex-row">
                 <Link
@@ -87,6 +115,21 @@ export async function AvailableCourses() {
                 >
                   Crear cuenta
                 </Link>
+              </div>
+              <p className="mt-2 text-xs text-slate-400">
+                Sin costo · acceso inmediato · web/móvil
+              </p>
+
+              <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                {FEATURE_BOXES.map((box) => (
+                  <div key={box.title} className={`rounded-xl p-4 ${box.bg}`}>
+                    <p className="flex items-center gap-2 text-sm font-semibold text-slate-800">
+                      <span aria-hidden>{box.icon}</span>
+                      {box.title}
+                    </p>
+                    <p className="mt-1 text-xs text-slate-600">{box.description}</p>
+                  </div>
+                ))}
               </div>
             </div>
           </article>
