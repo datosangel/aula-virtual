@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
+import { Reveal } from "@/components/landing/reveal";
 
 const LEVEL_LABEL: Record<string, string> = {
   BASICO: "Nivel básico",
@@ -35,6 +36,17 @@ const FEATURE_BOXES = [
   },
 ] as const;
 
+const CATEGORY_STYLE: Record<string, { icon: string; gradient: string }> = {
+  Negocios: { icon: "💼", gradient: "from-amber-400 to-orange-500" },
+  Tecnología: { icon: "💻", gradient: "from-sky-400 to-blue-600" },
+  Idiomas: { icon: "🗣️", gradient: "from-violet-400 to-purple-600" },
+  Diseño: { icon: "🎨", gradient: "from-pink-400 to-rose-500" },
+  "Marketing Digital": { icon: "📣", gradient: "from-emerald-400 to-teal-600" },
+  Productividad: { icon: "⚡", gradient: "from-indigo-400 to-blue-600" },
+  Creatividad: { icon: "✨", gradient: "from-fuchsia-400 to-pink-600" },
+};
+const DEFAULT_CATEGORY_STYLE = { icon: "📘", gradient: "from-[#013C9A] to-[#3BB546]" };
+
 export async function AvailableCourses() {
   const courses = await prisma.course.findMany({
     where: { status: "PUBLICADO" },
@@ -47,96 +59,113 @@ export async function AvailableCourses() {
 
   return (
     <section id="cursos-disponibles" className="mx-auto max-w-[1000px] px-4 py-12 md:px-8">
-      <h2 className="text-2xl font-semibold text-[#0D212C] md:text-3xl">Academia</h2>
-      <p className="mt-1 text-lg text-slate-600 md:text-xl">Cursos disponibles</p>
+      <Reveal>
+        <h2 className="text-2xl font-semibold text-[#0D212C] md:text-3xl">Academia</h2>
+        <p className="mt-1 text-lg text-slate-600 md:text-xl">Cursos disponibles</p>
+      </Reveal>
 
-      <div className="mt-6 flex flex-col gap-8">
-        {courses.map((course) => (
-          <article
-            key={course.id}
-            className="group overflow-hidden rounded-2xl border border-slate-200 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-[#013C9A]/30 hover:shadow-lg"
-          >
-            {course.imageUrl && (
-              <div className="relative h-56 w-full overflow-hidden md:h-72">
-                <Image
-                  src={course.imageUrl}
-                  alt={course.title}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 1000px"
-                  className="object-cover transition duration-500 group-hover:scale-105"
-                />
-              </div>
-            )}
+      <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
+        {courses.map((course, i) => {
+          const style = course.category
+            ? (CATEGORY_STYLE[course.category.name] ?? DEFAULT_CATEGORY_STYLE)
+            : DEFAULT_CATEGORY_STYLE;
 
-            <div className="p-5 md:p-6">
-              <Link
-                href="/login"
-                className="inline-flex items-center gap-1.5 text-lg font-semibold text-[#013C9A] underline-offset-2 hover:underline md:text-xl"
-              >
-                {course.title}
-                <span aria-hidden>🔓</span>
-              </Link>
-
-              <div className="mt-3 flex flex-wrap gap-2">
-                <span className="rounded-full bg-amber-50 px-3 py-1 text-xs font-medium text-amber-700 transition hover:bg-amber-100">
-                  {LEVEL_LABEL[course.level] ?? course.level}
-                </span>
-                {course.durationHrs && (
-                  <span className="rounded-full bg-sky-50 px-3 py-1 text-xs font-medium text-sky-700 transition hover:bg-sky-100">
-                    ⏱ {course.durationHrs} h de duración
-                  </span>
-                )}
-                {course.category && (
-                  <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700 transition hover:bg-emerald-100">
-                    {course.category.name}
-                  </span>
-                )}
-                <span className="rounded-full bg-rose-50 px-3 py-1 text-xs font-medium text-rose-700 transition hover:bg-rose-100">
-                  Certificado incluido
-                </span>
-              </div>
-
-              <p className="mt-4 text-sm leading-relaxed text-slate-600 md:text-base">
-                {course.description}
-              </p>
-
-              <p className="mt-2 text-xs text-slate-500">Docente: {course.teacher.name}</p>
-
-              <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-                <Link
-                  href="/login"
-                  className="rounded-lg bg-[#013C9A] px-5 py-2.5 text-center text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:shadow-md hover:brightness-110 active:translate-y-0"
-                >
-                  Ver curso
-                </Link>
-                <Link
-                  href="/registro"
-                  className="rounded-lg border border-[#3BB546] px-5 py-2.5 text-center text-sm font-semibold text-[#2E8C37] transition hover:-translate-y-0.5 hover:bg-[#3BB546]/10 hover:shadow-md active:translate-y-0"
-                >
-                  Crear cuenta
-                </Link>
-              </div>
-              <p className="mt-2 text-xs text-slate-400">
-                Sin costo · acceso inmediato · web/móvil
-              </p>
-
-              <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
-                {FEATURE_BOXES.map((box) => (
-                  <div
-                    key={box.title}
-                    className={`rounded-xl p-4 transition duration-200 hover:-translate-y-0.5 hover:shadow-sm ${box.bg}`}
-                  >
-                    <p className="flex items-center gap-2 text-sm font-semibold text-slate-800">
-                      <span aria-hidden>{box.icon}</span>
-                      {box.title}
-                    </p>
-                    <p className="mt-1 text-xs text-slate-600">{box.description}</p>
+          return (
+            <Reveal key={course.id} delay={0.08 * (i % 6)} className="h-full">
+              <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1.5 hover:border-[#013C9A]/30 hover:shadow-xl">
+                {course.imageUrl ? (
+                  <div className="relative h-48 w-full overflow-hidden">
+                    <Image
+                      src={course.imageUrl}
+                      alt={course.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 500px"
+                      className="object-cover transition duration-500 group-hover:scale-105"
+                    />
                   </div>
-                ))}
-              </div>
-            </div>
-          </article>
-        ))}
+                ) : (
+                  <div
+                    className={`relative flex h-32 w-full items-center justify-center overflow-hidden bg-gradient-to-br ${style.gradient}`}
+                  >
+                    <span
+                      aria-hidden
+                      className="text-5xl transition duration-300 group-hover:scale-110 group-hover:rotate-3"
+                    >
+                      {style.icon}
+                    </span>
+                    <span className="absolute -bottom-6 -right-6 h-24 w-24 rounded-full bg-white/10" />
+                    <span className="absolute -left-4 -top-4 h-16 w-16 rounded-full bg-white/10" />
+                  </div>
+                )}
+
+                <div className="flex flex-1 flex-col p-5 md:p-6">
+                  <Link
+                    href="/login"
+                    className="inline-flex items-center gap-1.5 text-lg font-semibold text-[#013C9A] underline-offset-2 hover:underline"
+                  >
+                    {course.title}
+                    <span aria-hidden>🔓</span>
+                  </Link>
+
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    <span className="rounded-full bg-amber-50 px-3 py-1 text-xs font-medium text-amber-700 transition hover:bg-amber-100">
+                      {LEVEL_LABEL[course.level] ?? course.level}
+                    </span>
+                    {course.durationHrs && (
+                      <span className="rounded-full bg-sky-50 px-3 py-1 text-xs font-medium text-sky-700 transition hover:bg-sky-100">
+                        ⏱ {course.durationHrs} h
+                      </span>
+                    )}
+                    {course.category && (
+                      <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700 transition hover:bg-emerald-100">
+                        {course.category.name}
+                      </span>
+                    )}
+                  </div>
+
+                  <p className="mt-4 text-sm leading-relaxed text-slate-600">
+                    {course.description}
+                  </p>
+
+                  <p className="mt-2 text-xs text-slate-500">Docente: {course.teacher.name}</p>
+
+                  <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+                    <Link
+                      href="/login"
+                      className="rounded-lg bg-[#013C9A] px-5 py-2.5 text-center text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:shadow-md hover:brightness-110 active:translate-y-0"
+                    >
+                      Ver curso
+                    </Link>
+                    <Link
+                      href="/registro"
+                      className="rounded-lg border border-[#3BB546] px-5 py-2.5 text-center text-sm font-semibold text-[#2E8C37] transition hover:-translate-y-0.5 hover:bg-[#3BB546]/10 hover:shadow-md active:translate-y-0"
+                    >
+                      Crear cuenta
+                    </Link>
+                  </div>
+                  <p className="mt-2 text-xs text-slate-400">
+                    Sin costo · acceso inmediato · web/móvil
+                  </p>
+
+                  <div className="mt-5 grid flex-1 grid-cols-1 gap-3 sm:grid-cols-2">
+                    {FEATURE_BOXES.map((box) => (
+                      <div
+                        key={box.title}
+                        className={`rounded-xl p-4 transition duration-200 hover:-translate-y-0.5 hover:shadow-sm ${box.bg}`}
+                      >
+                        <p className="flex items-center gap-2 text-sm font-semibold text-slate-800">
+                          <span aria-hidden>{box.icon}</span>
+                          {box.title}
+                        </p>
+                        <p className="mt-1 text-xs text-slate-600">{box.description}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </article>
+            </Reveal>
+          );
+        })}
       </div>
     </section>
   );
