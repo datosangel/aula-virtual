@@ -6,7 +6,7 @@ import { CourseMarquee } from "@/components/landing/course-marquee";
 import { FeaturedCourses } from "@/components/landing/featured-courses";
 import { LandingButton } from "@/components/landing/landing-button";
 import { LandingFooter } from "@/components/landing/landing-footer";
-import { LandingHeader } from "@/components/landing/landing-header";
+import { LandingShell } from "@/components/landing/landing-shell";
 import { PartnerSection } from "@/components/landing/partner-section";
 import { PlansSection } from "@/components/landing/plans-section";
 import { QuoteSection } from "@/components/landing/quote-section";
@@ -26,9 +26,7 @@ export default async function HomePage() {
   }
 
   return (
-    <div className="w-full bg-white">
-      <LandingHeader />
-
+    <LandingShell>
       {/* ---------- Hero ---------- */}
       <section className="mx-auto max-w-[480px] px-6 pt-14 text-center md:pt-20">
         <Reveal delay={0.1}>
@@ -84,6 +82,6 @@ export default async function HomePage() {
       <PartnerSection />
       <LandingFooter />
       <BottomNav />
-    </div>
+    </LandingShell>
   );
 }
