@@ -204,6 +204,43 @@ body {
   }
 }
 
+/* ---------- Blobs decorativos del hero ---------- */
+
+@keyframes heroBlob {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(16px, -20px) scale(1.08);
+  }
+}
+
+@keyframes heroBlobReverse {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-14px, 18px) scale(1.05);
+  }
+}
+
+.animate-hero-blob {
+  animation: heroBlob 9s ease-in-out infinite;
+}
+
+.animate-hero-blob-reverse {
+  animation: heroBlobReverse 11s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-hero-blob,
+  .animate-hero-blob-reverse {
+    animation: none !important;
+  }
+}
+
 /* ---------- Pantalla de carga ---------- */
 
 @keyframes loaderRing {
